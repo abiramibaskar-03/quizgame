@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Booksky</title>
+ 
+</head>
+<style>
+  body{
+    margin:0px; 
+    background-color: black;
+  }
+  .title{
+    background-color: rgb(224, 73, 73);
+    height: 60px;
+    font-weight:bold;
+    font-size: 30px;
+    padding: 10px 0px 0px 0px;
+    padding-left: 20px ;
+    text-align: center;
+    margin-bottom: 13px;
+  }
+  .bookimage{
+     position: fixed;
+     right: 0px;
+     width: 300px;
+     bottom: 60px;
+     top: 70px;
+     height: 100%;
+     border-radius: 10px;
+  }
+  
+  .popupbox{
+     position: fixed;
+     top: 100px;
+     left: 50px;
+     z-index: 3;
+     background-color: rgb(224, 73, 73);
+     padding: 30px;
+     text-align: center;
+     display: none;
+  }
+  div{
+    font-size: 20px;
+    font-weight: bold;
+  }
+  .popupbox input{
+    margin-bottom: 20px;
+    width: 300px;
+    border: none;
+    border-bottom:2px solid black;
+    background-color: transparent;
+
+  }
+
+  .popupbox input:focus{
+    outline: none;
+  }
+
+  .popupbox input::placeholder{
+    font-size: 18px;
+    color: rgb(84, 82, 82);
+  }
+  .textarea{
+    border:3px solid black;
+    width: 300px;
+    height: 50px;
+  }
+
+  .popupbox textarea:focus{
+    outline: none;
+  }
+
+  button{
+    background-color: black;
+    color: white;
+    padding: 6px;
+    cursor: pointer;
+  }
+  button:hover{
+    opacity: 0.8;
+  }
+  .bookContainer{
+    margin: 10px;
+    grid-template-columns:300px 300px 300px;
+    position: fixed;
+    right: 300px;
+    left: 0px;
+    column-gap:10px;
+    display: flex;
+    justify-content: space-between;
+  }
+
+  @media screen and (max-width:600px){
+
+  .bookimage{
+    
+    width: 100%;
+    height: 200px;
+  }
+  .bookContainer{
+    margin-top:200px;
+    grid-template-columns:200px 200px;
+    margin-left:20px;
+    margin-right:20px;
+  
+  }
+  }
+
+  .booklist{
+    
+    border: 2px solid gray;
+    background-color:rgb(218, 212, 212) ;
+    border-radius:10px;
+    padding: 10px;
+    margin-bottom: 10px;
+    font-weight: normal;
+    font-size: 18px;
+  }
+  .addbtn{
+    height: 50px;
+    width: 50px;
+    background-color: rgb(224, 73, 73) ;
+    border-radius: 25px;
+    color: white;
+    font-weight: bold;
+    position: fixed;
+    bottom:20px;
+    right: 20px;
+    font-size: 25px;
+    border: none;
+  }
+</style>
+<body>
+   <div class="title">Booksky</div>
+   <div><img class="bookimage" src="pictures/book.jpg" alt="bookimage"></div>
+   <div class="bookContainer"></div>
+
+   <div class="popupbox">
+      <p>Add Book</p>
+      <input class="book-name" type="text" placeholder="Bookname"><br>
+      <input class="book-author" type="text" placeholder="Bookauthor"><br>
+      <textarea class="textarea"></textarea><br>
+      <pre><button onclick="addbookitems();">ADD</button>  <button onclick="hideadd();">CANCEL</button></pre>
+   </div>
+
+   
+   <button class="addbtn" onclick="addbook();">+</button>
+
+   <script>
+    // select popupbox div
+    let popupbox=document.querySelector(".popupbox");
+    // select bookname,bookauthor, textarea
+    let bookName=document.querySelector(".book-name");
+    let bookAuthor=document.querySelector(".book-author")
+    let bookdescription=document.querySelector("textarea");
+   
+    //select booklist
+    let bookContainer=document.querySelector(".bookContainer");
+       function hideadd(){
+            popupbox.style.display="none";
+       }
+       function addbook(){
+            popupbox.style.display="inline-block";
+       }
+       let html='';
+       let delbtn="DELETE";
+       function addbookitems(){
+          
+          html+=`<div class="booklist">
+            <p><h2>${bookName.value}</h2></p>
+            <p>${bookAuthor.value}</p>
+            <p>${bookdescription.value}</p>
+           
+            <button onclick="deletebook(event)">${delbtn}</button></div>`;
+            bookContainer.style.display="grid";
+            bookContainer.innerHTML=html;
+            bookName.value='';
+            bookAuthor.value='';
+            bookdescription.value='';
+            hideadd();
+       }
+
+       let booklist=document.querySelector(".booklist");
+       function deletebook(event){
+          console.log(event.target.parentElement);
+          let deleteItems=event.target.parentElement;
+          deleteItems.remove(booklist);
+       }
+   </script>
+</body>
+</html>
